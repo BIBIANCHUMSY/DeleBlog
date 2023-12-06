@@ -1,0 +1,27 @@
+version: '3.1'
+services:
+  db:
+    container_name: postgresql-container
+    restart: always
+    image: postgres:16
+    ports:
+      - "5431:5432"
+    environment:
+      - POSTGRES_DB=deleblogDB
+      - POSTGRES_PASSWORD=08131054804Chi.
+      - POSTGRES_USER=postgres
+    volumes:
+      - /Users/mac/Desktop/deleblog_container:/var/lib/postgresql/data
+  backend:
+    build: .
+    container_name: deleblog_container
+    image: deleblog_app
+    ports:
+      - "4000:4003"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/deleblogDB
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=08131054804Chi.
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create
+    depends_on:
+      - db
